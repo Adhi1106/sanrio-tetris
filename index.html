@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cutesy Sanrio Tetris</title>
+  <!-- Press Start 2P title font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <div class="title"><span>TETRIS</span></div>
+      <div class="controls-hint">
+        ←/→ move • ↓ <b>hard drop</b> • <b>F</b> soft drop •
+        <b>A</b> rotate ⟲ • <b>D</b> rotate ⟳ • <b>S</b> 180° •
+        <b>Space</b> start/pause • <b>M</b> Mute/Unmute
+      </div>
+    </div>
+
+    <!-- Cute theme toggle (top-left) -->
+    <label class="theme-switch" title="Toggle theme">
+      <input type="checkbox" id="themeSwitch" aria-label="Toggle theme" />
+      <span class="track">
+        <span class="dot"></span>
+      </span>
+    </label>
+
+    <!-- Centering wrapper -->
+    <div class="game-wrap">
+      <div class="game">
+        <!-- LEFT: scoreboards -->
+        <div class="leftCol">
+          <div class="scoreGrid">
+            <div class="panel yellow">
+              <h3>Current Rows</h3>
+              <div class="big" id="rows">0</div>
+              <div class="sub">Lines cleared</div>
+              <div class="holder holder-in-panel">
+                <img src="assets/cinnamoroll.png" alt="Cinnamoroll" />
+              </div>
+            </div>
+
+            <div class="panel green">
+              <h3>Personal Best</h3>
+              <div class="big" id="pb">0</div>
+              <div class="sub">Best Score Ever</div>
+              <div class="holder holder-in-panel">
+                <img src="assets/hellokitty.png" alt="Hello Kitty" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER: board + buttons -->
+        <div class="center">
+          <div class="boardWrap">
+            <canvas id="board" width="300" height="600"></canvas>
+          </div>
+
+          <!-- Cute floaters -->
+          <img class="floater floater-left"  src="assets/kuromi.png"    alt="" />
+          <img class="floater floater-right" src="assets/mymelody.png"  alt="" />
+
+          <div class="controls">
+            <button id="start">Start / Pause</button>
+            <button id="reset" class="danger">Reset</button>
+            <button id="drop"  class="alt">Hard Drop</button>
+            <button id="muteBtn" class="audio-btn" aria-label="Toggle sound" title="Toggle sound (M)">🔊</button>
+          </div>
+        </div>
+
+        <!-- RIGHT: next -->
+        <div class="rightCol">
+          <div class="between">
+            <div class="cloud">
+              <div class="cloud-title">NEXT</div>
+              <canvas id="next" width="160" height="120"></canvas>
+            </div>
+          </div>
+        </div>
+      </div> <!-- /.game -->
+    </div> <!-- /.game-wrap -->
+  </div> <!-- /.wrap -->
+
+  <!-- Toast -->
+  <div class="toast hidden" id="toast"><div id="toastText"></div></div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div class="modal-title" id="modalTitle">Ah You lost</div>
+      <div class="modal-sub">Wanna try again?</div>
+      <button id="playAgain" class="playagain">Play Again</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
+

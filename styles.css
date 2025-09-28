@@ -1,0 +1,314 @@
+/* ========= Fonts ========= */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ========= Theme Vars ========= */
+:root{
+  --ink:#ff2e8f;
+  --soft:#6a6a6a;
+  --bg-pale:#ffe9f2;
+  --board1:#e9f6ff;
+  --board2:#f6fbff;
+  --panel-yellow:#fff7d1;
+  --panel-green:#e7ffe9;
+  --border:#e9edf5;
+
+  /* unified card size */
+  --card-w: 180px;
+  --card-h: 130px;
+  --card-gap: 24px;
+
+  /* mascot placement */
+  --floater-gap: 360px;
+  --floater-shift: 36px;
+}
+
+/* ========= Base ========= */
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0;
+  background:var(--bg-pale);
+  color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+}
+
+/* ========= Header ========= */
+.wrap{
+  width:100%;
+  max-width:1280px;          /* a touch wider so the left cards can sit closer to the edge */
+  margin-inline:auto;
+  padding:18px 10px 24px;    /* small left padding => scoreboards hug the left more */
+}
+
+.head{ display:grid; justify-items:center; row-gap:10px; margin-bottom:8px }
+.title span{
+  font-family:"Press Start 2P",system-ui;
+  color:#c83d7a;
+  font-size:clamp(22px,3.3vw,30px);
+  letter-spacing:1px;
+  line-height:1;
+}
+.controls-hint{
+  display:inline-flex; gap:8px; flex-wrap:wrap; justify-content:center; align-items:center;
+  padding:6px 12px; border:2px solid #f6cfe4; background:#fff; color:#5b5b5b; font-size:13px;
+  border-radius:999px; box-shadow:0 8px 22px rgba(0,0,0,.06);
+}
+.controls-hint .sym{ font-weight:800; color:#333 }
+.controls-hint .dot{ opacity:.55 }
+
+/* ========= Centering wrapper (keeps board centered) ========= */
+.game-wrap{
+  width:100%;
+  display:flex;
+  justify-content:center;   /* centers the entire 3-col block */
+  margin-top:40px;
+}
+
+/* 3 columns: left (auto), center(board), right(auto) */
+.game{
+  width:min(1240px, 98vw);  /* slightly wider => left column sits closer to the page edge */
+  display:grid;
+  grid-template-columns: auto 320px auto;
+  column-gap:60px;
+  align-items:start;
+}
+
+/* ========= LEFT — Scoreboards ========= */
+.leftCol{ display:block }
+.scoreGrid{
+  display:grid;
+  grid-template-columns: var(--card-w) var(--card-w);
+  gap:var(--card-gap);
+  justify-content:start;    /* hugs left edge */
+}
+
+.panel{
+  position:relative;
+  width:var(--card-w);
+  height:var(--card-h);
+  border:2px solid var(--border);
+  border-radius:20px;
+  padding:14px 16px;
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,.04);
+}
+.panel.yellow{ background:var(--panel-yellow) }
+.panel.green { background:var(--panel-green)  }
+
+.panel h3{ margin:0 0 6px; font-size:15px; color:#333; font-weight:800 }
+.panel .big{ font-weight:900; font-size:36px; color:#222; line-height:1 }
+.panel .sub{ font-size:12px; color:#444 }
+.panel > *{ position:relative; z-index:1 }
+
+/* character inside cards — same scale, contained */
+.holder.holder-in-panel{
+  position:absolute; top:55%; right:8px; transform:translateY(-50%);
+  z-index:0; animation:float 6s ease-in-out infinite;
+}
+.panel .holder-in-panel img{
+  width:56px;              /* HK & Cinnamoroll same visual size */
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 14px rgba(0,0,0,.12))
+}
+
+/* ========= CENTER — Board + Buttons ========= */
+.center{ position:relative; display:grid; justify-items:center; gap:16px }
+.boardWrap{
+  width:300px; height:600px; padding:12px;
+  background:linear-gradient(180deg,var(--board1),var(--board2));
+  border:2px solid var(--border); border-radius:26px;
+  box-shadow:0 24px 50px rgba(0,0,0,.08), inset 0 0 0 8px #ffffff88;
+}
+#board{ width:100%; height:100%; display:block; border-radius:16px; background:transparent }
+
+/* floaters stay clear of cards/board */
+.floater{
+  position:absolute; top:calc(50% + var(--floater-shift)); transform:translateY(-50%);
+  pointer-events:none; opacity:.92; z-index:0;
+  filter:drop-shadow(0 12px 20px rgba(0,0,0,.18)); animation:float 5.2s ease-in-out infinite;
+}
+.floater-left  { left:calc(-1 * var(--floater-gap));  width:260px }
+.floater-right { right:calc(-1 * var(--floater-gap)); width:260px }
+
+@keyframes float{
+  0%{ transform:translateY(-50%) rotate(-2deg) }
+  50%{ transform:translateY(calc(-50% - 8px)) rotate(2deg) }
+  100%{ transform:translateY(-50%) rotate(-2deg) }
+}
+
+/* ========= RIGHT — NEXT ========= */
+.rightCol{ display:grid; place-items:start }
+.between{ display:grid; place-items:start }
+.cloud{
+  position:relative;
+  width:var(--card-w);
+  height:var(--card-h);
+  border:2px solid #ffd6ea;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+  display:grid; place-items:center;
+}
+.cloud .cloud-title{
+  position:absolute; top:8px; left:50%; transform:translateX(-50%);
+  font-size:13px; font-weight:900; font-family:"Press Start 2P", system-ui; color:#c2185b; letter-spacing:1px;
+}
+/* smaller preview, centered (display only — not gameplay size) */
+.cloud canvas{
+  background:transparent;
+  transform:scale(.58);       /* smaller than before */
+  transform-origin:center center;
+}
+
+/* ========= Buttons under board ========= */
+.controls{ display:flex; gap:12px; justify-content:center; align-items:center; margin-top:10px }
+button{
+  border:0; padding:12px 16px; border-radius:14px; font-weight:800; cursor:pointer;
+  min-width:140px; transition:.12s transform; background:linear-gradient(180deg,#ffe0ef,#ffd3e9);
+  color:#7b2551; box-shadow:0 6px 0 #f6b8d5;
+}
+button:active{ transform:translateY(3px) }
+.alt{ background:linear-gradient(180deg,#d9f1ff,#c7e9ff); color:#154a6a; box-shadow:0 6px 0 #a8d8f5 }
+.danger{ background:linear-gradient(180deg,#ffe3c4,#ffd39a); color:#6a4315; box-shadow:0 6px 0 #f1c070 }
+
+/* ========= Toast ========= */
+.toast{ position:fixed; inset:auto 0 20px 0; display:grid; place-items:center; pointer-events:none; z-index:50 }
+.toast>div{ background:#fff; border:2px solid #ffb9d4; padding:10px 14px; border-radius:12px; font-weight:800; box-shadow:0 10px 30px rgba(0,0,0,.08) }
+.hidden{ display:none }
+
+/* ——— On-screen audio button ——— */
+.audio-btn{
+  margin-left: .5rem;
+  padding: .5rem .7rem;
+  border: 0;
+  border-radius: 12px;
+  background: #ffe6f5;          /* pale pink */
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .08s ease, filter .15s ease;
+}
+.audio-btn:hover{ filter: brightness(.98); }
+.audio-btn:active{ transform: translateY(1px) scale(0.98); }
+
+/* ========= Modal ========= */
+.modal{
+  display:none;
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(255,236,247,.75); backdrop-filter:blur(3px);
+  place-items:center;
+}
+.modal.open{ display:grid }
+.modal-card{
+  background:#fff; border:2px solid #ffb9d4; border-radius:20px;
+  padding:18px 24px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.15); min-width:280px;
+}
+.modal-title{ font-weight:900; font-size:26px; color:#222 }
+.modal-sub{ color:#444; margin:6px 0 12px }
+.playagain{
+  border:0; padding:10px 16px; border-radius:14px; font-weight:900; cursor:pointer;
+  background:linear-gradient(180deg,#d9f1ff,#c7e9ff); color:#154a6a; box-shadow:0 6px 0 #a8d8f5;
+}
+.playagain:active{ transform:translateY(2px) }
+
+/* ========= Responsive ========= */
+@media (max-width: 980px){
+  .game{ grid-template-columns:1fr; column-gap:20px }
+  .leftCol,.rightCol{ order:-1 }
+  .scoreGrid{ grid-template-columns:1fr; gap:14px }
+  .floater-left,.floater-right{ display:none }
+}
+/* === alignment overrides (append at END of styles.css) === */
+
+/* tweak values here */
+:root{
+  --board-offset: -250px;        /* more negative = move game window further left */
+  --kuromi-extra-left: -150px;     /* bigger = push Kuromi further left */
+  --mymelody-extra-right: 100px;  /* bigger = push My Melody further left (away from right edge) */
+}
+
+/* move the game window (and its buttons) left */
+.center{
+  transform: translateX(var(--board-offset));
+}
+
+/* push Kuromi further left */
+.floater-left{
+  left: calc(-1 * var(--floater-gap) - var(--kuromi-extra-left));
+}
+
+/* pull My Melody a bit left from the right edge */
+.floater-right{
+  right: calc(-1 * var(--floater-gap) - var(--mymelody-extra-right));
+}
+/* allow JS to pull up any extra space without clipping content */
+.wrap{ margin-bottom: 0; }
+/* ===== Cute Theme Toggle (top-left) ===== */
+.theme-switch{
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 1200;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-switch input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-switch .track{
+  width: 78px; height: 30px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f01397, #f375c0);
+  border: 2px solid #080003;
+  box-shadow: 0 6px 16px rgba(0,0,0,.08), inset 0 0 0 6px #ffffff80;
+  display: inline-block;
+  position: relative;
+}
+
+.theme-switch .dot{
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, #ffe9f7 60%);
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
+  position: absolute; top: 50%; left: 3px;
+  transform: translateY(-50%);
+  transition: transform .22s cubic-bezier(.2,.7,.2,1.1);
+}
+.theme-switch input:checked + .track .dot{
+  transform: translate(48px, -50%); /* slide right */
+}
+
+/* ===== Dark theme tokens (bubbly pastel-night) ===== */
+:root[data-theme="dark"]{
+  --bg-pale:#1e1b2e;
+  --ink:#ffd1e8;
+  --soft:#c9c9d4;
+  --border:#2a2540;
+
+  --board1:#2a2a44;
+  --board2:#24223a;
+
+  --panel-yellow:#3a2e3a;
+  --panel-green:#2e3a36;
+}
+
+/* Optional: subtle dark-mode text contrast fixes */
+:root[data-theme="dark"] .panel h3{ color:#f2e9f2 }
+:root[data-theme="dark"] .panel .big{ color:#ffffff }
+:root[data-theme="dark"] .panel .sub{ color:#ddd }
+:root[data-theme="dark"] .controls-hint{
+  background:#2a2540; border-color:#3a2f58; color:#ddd;
+}
+:root[data-theme="dark"] .boardWrap{
+  box-shadow: 0 24px 50px rgba(0,0,0,.35), inset 0 0 0 8px #ffffff22;
+}
+:root[data-theme="dark"] button{
+  color:#2b1535;
+}
