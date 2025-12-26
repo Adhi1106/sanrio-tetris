@@ -25,6 +25,8 @@ script.js – game logic and interactions
 
 assets/ – images and UI assets
 
+README.md - project documentation
+
 ## What I Learned
 - DOM manipulation using JavaScript
 - Game loops and state management
