@@ -1,6 +1,7 @@
 ## Title
 Sanrio Tetris Game
 
+Play here!: https://adhi1106.github.io/sanrio-tetris/
 ## Description
 A browser-based Tetris game inspired by Sanrio aesthetics. Built using HTML, CSS, and JavaScript with a focus on game logic, DOM manipulation, and interactive UI design.
 
